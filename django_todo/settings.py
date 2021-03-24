@@ -14,6 +14,9 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 import os
 import dj_database_url
 
+
+development = os.environ.get('DEVELOPMENT', False)
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 # BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -28,7 +31,11 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'kc@w6q46e+-&p_2ql@q#l4a9b#pm4!kuo2(sj
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [os.environ.get('HEROKU_HOSTNAME'), 'localhost']
+if development:
+    ALLOWED_HOSTS = ['localhost']
+else:
+    ALLOWED_HOSTS = [os.environ.get('HEROKU_HOSTNAME')]
+
 
 
 # Application definition
@@ -86,7 +93,6 @@ WSGI_APPLICATION = 'django_todo.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))
-    # 'postgres://ztorpqsqsakfdn:d1bc94d7e4a2751bf0fd355e7b61f03e989ff752110c03b9f416c683faeee2c6@ec2-52-71-161-140.compute-1.amazonaws.com:5432/dc1cvou121nsmq')
 }
 
 
